@@ -11,6 +11,8 @@ ordinal = date.toordinal()
 firebase=pyrebase.initialize_app(firebaseConfig)
 
 db = firebase.database()
+channelId = int(channelId)
+
 
 @bot.event
 async  def on_ready():
@@ -29,7 +31,7 @@ async def change_status():
     paraHoy = ""
     paraManana = ""
     fechas = db.get()
-    if(type(fechas.each()) == 'list'):
+    if(type(fechas.each()) == type([])):
         for fecha in fechas.each():
             fechaSt = fecha.key()
             year, month, day = fechaSt.split('-')
@@ -42,7 +44,7 @@ async def change_status():
             if(date + datetime.timedelta(days=1) == dateObj):
                 for sse in fecha.val():
                     tarea = (fecha.val())[sse]
-                    paraManana = paraManana + '\n' + '**-' + tarea + '**'
+                    paraManana = paraManana + '\n' + '**- ' + tarea + '**'
 
     if(paraHoy != "" or paraManana != ""):
         msj = "***Recordatorios*** \U0001F4C5\n"
@@ -53,9 +55,10 @@ async def change_status():
                 msj = msj + "\n"    
             msj = msj + "Para mañana: " + paraManana
     else:
-        msj = "**"
+        msj = ""
 
-    await channel.send(msj)
+    if(msj != ""):
+        await channel.send(msj)
 
 @bot.command()
 async def n(ctx, fecha, desc):
@@ -73,16 +76,17 @@ async def cal(ctx):
     msj = "***Calendario*** \U0001F4C5"
     fechas = db.get()
     index = 1
-    for fecha in fechas.each():
-        fechaSt = fecha.key()
-        year, month, day = fechaSt.split('-')
-        fechaStr = day + '-' + month + '-' + year
-        for sse in fecha.val():
-            tarea = (fecha.val())[sse]
-            msj = msj + '\n\n' + '**' + str(index) + ". " + tarea + '**\n' + "*para el " + fechaStr + '*'
-            index += 1
-    channel = bot.get_channel(channelId)
-    await channel.send(msj)
+    if (type(fechas.each()) == type([])):
+        for fecha in fechas.each():
+            fechaSt = fecha.key()
+            year, month, day = fechaSt.split('-')
+            fechaStr = day + '-' + month + '-' + year
+            for sse in fecha.val():
+                tarea = (fecha.val())[sse]
+                msj = msj + '\n\n' + '**' + str(index) + ". " + tarea + '**\n' + "*para el " + fechaStr + '*'
+                index += 1
+        channel = bot.get_channel(channelId)
+        await channel.send(msj)
 
 @bot.command()
 async def r(ctx, arg):
