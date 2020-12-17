@@ -2,6 +2,7 @@
 * [Información general](#información-general)
 * [Requisitos](#requisitos)
 * [Setup](#setup)
+* [Funcionamiento y comandos](#funcionamiento-y-comandos)
 
 ## Información general
 Bot de Discord para administrar tareas y fechas de entrega.
@@ -136,4 +137,42 @@ Bot de Discord para administrar tareas y fechas de entrega.
 
 ![30](./imgs/30.png)
 
-### 5. Corre el programa main.py.
+### 5. Correr el programa main.py.
+
+## Funcionamiento y comandos
+
+### Calendario
+
+Consiste de la descripción de cada tarea y su fecha de entrega. El calendario se despliega usando el comando **_.cal_**, y mostrará las tareas a entregar, enumeradas y ordenadas por fecha de entrega (empezando por la entrega más próxima).
+
+![31](./imgs/31.png)
+
+### .n (nueva tarea)
+
+Este comando permite añadir una nueva tarea al calendario, y se usa de la siguiente manera: **.n** _DD-MM-AAAA(fecha_de_entrega)_ **"**_descripción_de_la_tarea_**"**
+
+Ejemplo: **.n** _12-02-2021_ _"Proyecto final"_ (Nótese el uso de comillas en la descripción de la tarea).
+
+![32](./imgs/32.png)
+
+### .r (eliminar tarea)
+
+Permite eliminar tareas del calendario. Toma como argumento el número que le corresponde a la tarea en el calendario. Se usa de la siguiente manera: **r.** _número_de_tarea_en_el_calendario_
+
+Ejemplo: **.r** _2_
+
+![33](./imgs/33.png)
+
+### .m (modificar tarea)
+
+Modifica la descripción de una tarea existente en el calendario. Su sintaxis es: **.m** _número_de_tarea_en_el_calendario_ **"**_nueva_descripción_de_la_tarea_**"**
+
+Ejemplo: **.m** _2_ _"Proyecto/Exámen final"_
+
+![34](./imgs/34.png)
+
+### Recordatorios
+
+Cada 24 horas (contando a partir del momento en que se inició el bot) se revisará si hay entregas pendientes para el día actual o el día siguiente, de ser así, estos serán mostrados en un mensaje.
+
+![35](./imgs/35.png)
